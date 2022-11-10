@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "jdsetup"
+version = "0.0.1"
+description = "JD Setup library"
+authors = ["João Fauvel"]
+readme = "README.md"
+build = 'build.py'
+
+[tool.poetry.dependencies]
+python = "^3.10"
+kaitaistruct = "^0.10"
+fiona = "^1.8.22"
+xsdata = "^22.11"
+
+[build-system]
+requires = ["poetry-core", "setuptools"]
+build-backend = "poetry.core.masonry.api"
