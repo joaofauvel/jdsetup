@@ -148,14 +148,14 @@ class Client:
         }
     )
     source_node: str = field(
-        default=fmt_uuid4(),
+        default_factory=fmt_uuid4,
         metadata={
             "name": "sourceNode",
             "type": "Attribute",
         }
     )
     erid: str = field(
-        default=fmt_uuid4(),
+        default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
@@ -237,7 +237,7 @@ class Farm:
         }
     )
     erid: str = field(
-        default=fmt_uuid4(),
+        default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
@@ -1293,7 +1293,7 @@ class Field:
         }
     )
     erid: str = field(
-        default=fmt_uuid4(),
+        default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }

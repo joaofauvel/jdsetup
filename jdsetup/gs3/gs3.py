@@ -1,3 +1,5 @@
+import dataclasses
+from pathlib import Path
 from jdsetup.gs3.models.rcd.setup import (
     Participant,
     Client,
@@ -13,10 +15,34 @@ from jdsetup.gs3.models.rcd.setup import (
 from xsdata.formats.dataclass.context import XmlContext
 from xsdata.formats.dataclass.parsers import JsonParser
 
+@dataclasses.dataclass
+class ParticipantDefinition:
+    client: Client
+    farm: Farm
+    fields: list[Field] = dataclasses.field(default_factory=list)
+
+    @classmethod
+    def from_string(cls, client: str, farm: str, fields: list[str]) -> 'ParticipantDefinition':
+        cl = Client(name=client)
+        fm = Farm(cl, name=farm)
+        fds = [Field(fm, name=f) for f in fields]
+        return cls(cl, fm, fds)
+
+    @classmethod
+    def from_config(cls) -> 'ParticipantDefinition':
+        pass
 
 class GS3:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, participant: ParticipantDefinition, profile: str = 'JDSETUP') -> None:
+        self.profile = profile
+        self.participant = participant
+
+    def _create_card_scaffold_structure(self, root: str = '.') -> None:
+        p = Path(f'{root}/GS3_2630/{self.profile}/RCD/EIC/Fields/')
+        for field in self.participant.fields:
+            (p / field.erid[6:8].upper() / field.erid.strip('}{')).mkdir(parents=True)
+
+
 
 
 config_default_paths = {
