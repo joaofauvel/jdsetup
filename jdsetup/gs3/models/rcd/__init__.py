@@ -63,7 +63,6 @@ from jdsetup.gs3.models.rcd.setup import (
     VrRowWidth,
     VrTurnRadius,
 )
-
 from jdsetup.gs3.models.rcd.spatial_catalog import (
     Boundary,
     CurvedTrackLine,

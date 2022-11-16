@@ -54,10 +54,11 @@ class Parser(ABC):
 
 class GS3:
     def __init__(self, 
-            parser: Parser, 
             participant: ParticipantDefinition, 
             profile: str = 'JDSETUP', 
-            root: str = '.') -> None:
+            root: str = '.',
+            parser: Parser = JsonParser(),
+            ) -> None:
         self.profile = profile
         self.participant = participant
         self.parser = parser

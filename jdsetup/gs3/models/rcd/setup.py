@@ -1,7 +1,7 @@
 from dataclasses import InitVar, dataclass, field
 from decimal import Decimal
 from typing import List, Optional, Union
-from uuid import uuid4, UUID
+from jdsetup.gs3.common import fmt_uuid4
 from xsdata.models.datatype import XmlDateTime
 from jdsetup.gs3.models.basic_types import (
     FileSchemaContentVersion,
@@ -11,9 +11,6 @@ from jdsetup.gs3.models.basic_types import (
 )
 
 __NAMESPACE__ = "urn:schemas-johndeere-com:RCD:Setup"
-
-def fmt_uuid4() -> str:
-    return f'{{{str(uuid4())}}}'
 
 @dataclass
 class Area:
@@ -257,8 +254,9 @@ class Farm:
     )
 
     def __post_init__(self, client) -> None:
-        self.client_ref = client.erid if client else None
-        self.source_node = client.source_node if client else None
+        if client:
+            self.client_ref = client.erid
+            self.source_node = client.source_node
 
 
 @dataclass
@@ -1320,8 +1318,9 @@ class Field:
     )
 
     def __post_init__(self, farm) -> None:
-        self.farm_ref = farm.erid if farm else None
-        self.source_node = farm.source_node if farm else None
+        if farm:
+            self.farm_ref = farm.erid
+            self.source_node = farm.source_node
 
 
 @dataclass

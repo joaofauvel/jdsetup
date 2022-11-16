@@ -1,15 +1,19 @@
-from dataclasses import dataclass, field
+from dataclasses import InitVar, dataclass, field
 from typing import List, Optional
 from xsdata.models.datatype import XmlDateTime
+from jdsetup.gs3.models.basic_types import FileSchemaContentVersion, RepresentationSystemVersion, Synchronization, UnitOfMeasureVersion
 from jdsetup.gs3.models.rcd.setup import (
+    Farm,
+    Field,
     FileSchemaVersion,
-    Setup,
-    SourceApp,
+    Participant,
+    Products,
 )
 from jdsetup.gs3.models.spatial_types import (
     Mbr,
     DtSignalType,
 )
+from jdsetup.gs3.common import fmt_uuid4
 
 @dataclass
 class VrEastShiftComponent:
@@ -80,7 +84,7 @@ class VrReferenceLatitude:
         }
     )
     source_uom: Optional[str] = field(
-        default=None,
+        default='None',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
@@ -124,59 +128,10 @@ class VrReferenceLongitude:
 
 
 @dataclass
-class HeadlandLookup:
-    class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
-
-    id: Optional[int] = field(
-        default=None,
-        metadata={
-            "name": "ID",
-            "type": "Attribute",
-        }
-    )
-    erid_ref: Optional[str] = field(
-        default=None,
-        metadata={
-            "name": "eridRef",
-            "type": "Attribute",
-        }
-    )
-
-
-@dataclass
-class NameIdpair:
-    class Meta:
-        name = "NameIDPair"
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
-
-    name: Optional[str] = field(
-        default=None,
-        metadata={
-            "name": "Name",
-            "type": "Attribute",
-        }
-    )
-    id: Optional[int] = field(
-        default=None,
-        metadata={
-            "name": "ID",
-            "type": "Attribute",
-        }
-    )
-    passable: Optional[bool] = field(
-        default=None,
-        metadata={
-            "type": "Attribute",
-        }
-    )
-
-
-@dataclass
 class VrHeadlandOffset:
     class Meta:
         name = "vrHeadlandOffset"
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
+        namespace = ""
 
     value: Optional[int] = field(
         default=None,
@@ -201,12 +156,14 @@ class VrHeadlandOffset:
 
 
 @dataclass
-class Boundary:
+class HeadLand:
     class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
+        namespace = ""
+
+    field_: InitVar[Field | None] = None
 
     last_modified: Optional[XmlDateTime] = field(
-        default=None,
+        default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
             "type": "Attribute",
@@ -220,7 +177,121 @@ class Boundary:
         }
     )
     erid: Optional[str] = field(
+        default_factory=fmt_uuid4,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    name: Optional[str] = field(
         default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    use_as_turn_predictor: Optional[bool] = field(
+        default=None,
+        metadata={
+            "name": "useAsTurnPredictor",
+            "type": "Attribute",
+        }
+    )
+    use_driven_exterior_headland: Optional[bool] = field(
+        default=None,
+        metadata={
+            "name": "useDrivenExteriorHeadland",
+            "type": "Attribute",
+        }
+    )
+    vr_headland_offset: Optional[VrHeadlandOffset] = field(
+        default=None,
+        metadata={
+            "name": "vrHeadlandOffset",
+            "type": "Element",
+        }
+    )
+
+    def __post_init__(self, field_) -> None:
+        if field_:
+            self.source_node = field_.source_node
+
+@dataclass
+class HeadlandLookup:
+    class Meta:
+        namespace = ""
+
+    headland: InitVar[HeadLand | None] = None
+
+    id: Optional[int] = field(
+        default=None,
+        metadata={
+            "name": "ID",
+            "type": "Attribute",
+        }
+    )
+    erid_ref: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "eridRef",
+            "type": "Attribute",
+        }
+    )
+
+    def __post_init__(self, headland):
+        if headland:
+            self.erid_ref = headland.erid
+
+
+@dataclass
+class NameIdpair:
+    class Meta:
+        name = "NameIDPair"
+        namespace = ""
+
+    name: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "Name",
+            "type": "Attribute",
+        }
+    )
+    id: Optional[int] = field(
+        default=None,
+        metadata={
+            "name": "ID",
+            "type": "Attribute",
+        }
+    )
+    passable: Optional[bool] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+
+
+@dataclass
+class Boundary:
+    class Meta:
+        namespace = ""
+
+    field_: InitVar[Field | None] = None
+
+    last_modified: Optional[XmlDateTime] = field(
+        default=XmlDateTime.now(),
+        metadata={
+            "name": "lastModified",
+            "type": "Attribute",
+        }
+    )
+    source_node: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "sourceNode",
+            "type": "Attribute",
+        }
+    )
+    erid: Optional[str] = field(
+        default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
@@ -270,14 +341,20 @@ class Boundary:
         }
     )
 
+    def __post_init__(self, field_) -> None:
+        if field_:
+            self.source_node = field_.source_node
+
 
 @dataclass
 class CurvedTrackLine:
     class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
+        namespace = ""
+
+    field_: InitVar[Field | None] = None
 
     last_modified: Optional[XmlDateTime] = field(
-        default=None,
+        default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
             "type": "Attribute",
@@ -291,7 +368,7 @@ class CurvedTrackLine:
         }
     )
     erid: Optional[str] = field(
-        default=None,
+        default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
@@ -365,65 +442,17 @@ class CurvedTrackLine:
         }
     )
 
-
-@dataclass
-class HeadLand:
-    class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
-
-    last_modified: Optional[XmlDateTime] = field(
-        default=None,
-        metadata={
-            "name": "lastModified",
-            "type": "Attribute",
-        }
-    )
-    source_node: Optional[str] = field(
-        default=None,
-        metadata={
-            "name": "sourceNode",
-            "type": "Attribute",
-        }
-    )
-    erid: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Attribute",
-        }
-    )
-    name: Optional[str] = field(
-        default=None,
-        metadata={
-            "type": "Attribute",
-        }
-    )
-    use_as_turn_predictor: Optional[bool] = field(
-        default=None,
-        metadata={
-            "name": "useAsTurnPredictor",
-            "type": "Attribute",
-        }
-    )
-    use_driven_exterior_headland: Optional[bool] = field(
-        default=None,
-        metadata={
-            "name": "useDrivenExteriorHeadland",
-            "type": "Attribute",
-        }
-    )
-    vr_headland_offset: Optional[VrHeadlandOffset] = field(
-        default=None,
-        metadata={
-            "name": "vrHeadlandOffset",
-            "type": "Element",
-        }
-    )
+    def __post_init__(self, field_) -> None:
+        if field_:
+            self.source_node = field_.source_node
 
 
 @dataclass
 class SpatialItems:
     class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field"
+        namespace = ""
+
+    field_: InitVar[Field | None] = None
 
     erid_field_ref: Optional[str] = field(
         default=None,
@@ -454,34 +483,185 @@ class SpatialItems:
         }
     )
 
+    def __post_init__(self, field_) -> None:
+        if field_:
+            self.erid_field_ref = field_.erid
+
 
 @dataclass
-class SpatialCatalog:
+class SCFileSchemaVersion:
     class Meta:
-        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:FieldImportExport"
+        namespace = ""
+
+    non_production_code: Optional[int] = field(
+        default=None,
+        metadata={
+            "name": "nonProductionCode",
+            "type": "Attribute",
+        }
+    )
+    file_schema_content_version: Optional[FileSchemaContentVersion] = field(
+        default=None,
+        metadata={
+            "name": "FileSchemaContentVersion",
+            "type": "Element",
+            "namespace": "urn:schemas-johndeere-com:BasicTypes",
+        }
+    )
+    unit_of_measure_version: Optional[UnitOfMeasureVersion] = field(
+        default=None,
+        metadata={
+            "name": "UnitOfMeasureVersion",
+            "type": "Element",
+            "namespace": "urn:schemas-johndeere-com:BasicTypes",
+        }
+    )
+    representation_system_version: Optional[RepresentationSystemVersion] = field(
+        default=None,
+        metadata={
+            "name": "RepresentationSystemVersion",
+            "type": "Element",
+            "namespace": "urn:schemas-johndeere-com:BasicTypes",
+        }
+    )
+
+
+@dataclass
+class SCSourceApp:
+    class Meta:
+        namespace = ""
+
+    major: Optional[int] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    minor: Optional[int] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    build: Optional[int] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    revision: Optional[int] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+        }
+    )
+    name_source_app: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "nameSourceApp",
+            "type": "Attribute",
+        }
+    )
+    uuid_source_app: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "uuidSourceApp",
+            "type": "Attribute",
+        }
+    )
+    uuid_source_app_node: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "uuidSourceAppNode",
+            "type": "Attribute",
+        }
+    )
+    uuid_session: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "uuidSession",
+            "type": "Attribute",
+        }
+    )
+
+
+@dataclass
+class SCSetup:
+    class Meta:
+        namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
     file_schema_version: Optional[FileSchemaVersion] = field(
         default=None,
         metadata={
             "name": "FileSchemaVersion",
             "type": "Element",
-            "namespace": "urn:schemas-johndeere-com:RCD:Setup",
         }
     )
-    source_app: Optional[SourceApp] = field(
+    synchronization: Optional[Synchronization] = field(
+        default=None,
+        metadata={
+            "name": "Synchronization",
+            "type": "Element",
+            "namespace": "urn:schemas-johndeere-com:BasicTypes",
+        }
+    )
+    participant: Optional[Participant] = field(
+        default=None,
+        metadata={
+            "name": "Participant",
+            "type": "Element",
+        }
+    )
+    farm: Optional[Farm] = field(
+        default=None,
+        metadata={
+            "name": "Farm",
+            "type": "Element",
+        }
+    )
+    fields: List[Field] = field(
+        default_factory=list,
+        metadata={
+            "name": "Field",
+            "type": "Element",
+        }
+    )
+    products: Optional[Products] = field(
+        default=None,
+        metadata={
+            "name": "Products",
+            "type": "Element",
+        }
+    )
+
+
+@dataclass
+class SpatialCatalog:
+    class Meta:
+        namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:FieldImportExport"
+
+    file_schema_version: Optional[SCFileSchemaVersion] = field(
+        default=None,
+        metadata={
+            "name": "FileSchemaVersion",
+            "type": "Element",
+            "namespace": "",
+        }
+    )
+    source_app: Optional[SCSourceApp] = field(
         default=None,
         metadata={
             "name": "SourceApp",
             "type": "Element",
-            "namespace": "urn:schemas-johndeere-com:RCD:Setup",
+            "namespace": "",
         }
     )
-    setup: Optional[Setup] = field(
+    setup: Optional[SCSetup] = field(
         default=None,
         metadata={
             "name": "Setup",
             "type": "Element",
-            "namespace": "urn:schemas-johndeere-com:RCD:Setup",
+            "namespace": "",
         }
     )
     spatial_items: Optional[SpatialItems] = field(
@@ -489,6 +669,6 @@ class SpatialCatalog:
         metadata={
             "name": "SpatialItems",
             "type": "Element",
-            "namespace": "urn:schemas-johndeere-com:RCD:SpatialCatalog:Field",
+            "namespace": "",
         }
     )

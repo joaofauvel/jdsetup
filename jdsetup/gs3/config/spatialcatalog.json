@@ -1,0 +1,579 @@
+{
+  "FileSchemaVersion": {
+    "nonProductionCode": 0,
+    "FileSchemaContentVersion": {
+      "major": 1,
+      "minor": 11
+    },
+    "UnitOfMeasureVersion": {
+      "major": 1,
+      "minor": 43
+    },
+    "RepresentationSystemVersion": {
+      "major": 4,
+      "minor": 161
+    }
+  },
+  "SourceApp": {
+    "major": 2,
+    "minor": 0,
+    "build": 0,
+    "revision": 152,
+    "nameSourceApp": "RCD Target Provider",
+    "uuidSourceApp": "{b050528e-f328-4dd8-9e9c-71fe8153692e}",
+    "uuidSourceAppNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+    "uuidSession": "{989f9e79-8b52-4fcb-95b6-687309a5174a}"
+  },
+  "Setup": {
+    "FileSchemaVersion": {
+      "nonProductionCode": 0,
+      "FileSchemaContentVersion": {
+        "major": 3,
+        "minor": 28
+      },
+      "UnitOfMeasureVersion": {
+        "major": 1,
+        "minor": 43
+      },
+      "RepresentationSystemVersion": {
+        "major": 4,
+        "minor": 161
+      }
+    },
+    "Synchronization": {
+      "NodeVersions": {
+        "Node": {
+          "uuid": "{1e2dbef0-2fc9-4448-b722-5638f6da0d98}",
+          "lastSeen": "2022-10-27T12:49:21.489399300Z"
+        }
+      },
+      "EntityDeletions": ""
+    },
+    "Participant": {
+      "Client": {
+        "lastModified": "1970-01-01T00:00:00",
+        "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+        "erid": "{3cd1eb22-5b90-4238-bcbf-7168e611d27d}",
+        "name": "PAULO RIBAS"
+      }
+    },
+    "Farm": {
+      "lastModified": "2022-01-31T09:10:44.191784700-03:00",
+      "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+      "erid": "{4f3a6740-abf3-90a6-9e9d-204d6a240155}",
+      "name": "BARRA VELHA",
+      "clientRef": "{3cd1eb22-5b90-4238-bcbf-7168e611d27d}"
+    },
+    "Field": [
+      {
+        "lastModified": "2022-01-31T09:13:30.463900700-03:00",
+        "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+        "erid": "{558e9a75-5bca-4868-9628-876f48d87dbe}",
+        "name": "01 - PLANTIO",
+        "farmRef": "{4f3a6740-abf3-90a6-9e9d-204d6a240155}",
+        "Area": {
+          "value": "98.893585467042527",
+          "sourceUOM": "ha",
+          "variableRepresentation": "vrReportedFieldArea"
+        }
+      }
+    ],
+    "Products": {
+      "Chemical": [],
+      "Crop": []
+    }
+  },
+  "SpatialItems": {
+    "eridFieldRef": "{558e9a75-5bca-4868-9628-876f48d87dbe}",
+    "CurvedTrackLine": [
+      {
+        "lastModified": "1970-01-01T00:00:00",
+        "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+        "erid": "{5a7ef320-303c-405c-8ee7-49e5bf73773a}",
+        "spatialGeometryType": "point",
+        "fileName": "CurveTrack5a7ef320-303c-405c-8ee7-49e5bf73773a",
+        "name": "CURVA",
+        "MBR": {
+          "uomSource": "arcdeg",
+          "uomTarget": "arcdeg",
+          "north": -24.96845494053895,
+          "south": -24.977323534917797,
+          "east": -50.41971804371098,
+          "west": -50.43678992058621
+        },
+        "dtSignalType": {
+          "value": "dtiSignalTypeUnknown",
+          "definedTypeRepresentation": "dtSignalType"
+        },
+        "vrEastShiftComponent": {
+          "value": 0,
+          "sourceUOM": "m",
+          "variableRepresentation": "vrEastShiftComponent"
+        },
+        "vrNorthShiftComponent": {
+          "value": 0,
+          "sourceUOM": "m",
+          "variableRepresentation": "vrNorthShiftComponent"
+        },
+        "vrReferenceLatitude": {
+          "value": -24.96847112593969,
+          "sourceUOM": "arcdeg",
+          "variableRepresentation": "vrLatitude"
+        },
+        "vrReferenceLongitude": {
+          "value": -50.43656696261106,
+          "sourceUOM": "arcdeg",
+          "variableRepresentation": "vrLongitude"
+        }
+      }
+    ],
+    "HeadLand": {
+      "lastModified": "0001-01-01T00:00:00",
+      "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+      "erid": "{cb38ac47-df0a-a84b-f884-2a028644f548}",
+      "name": "CABECEIRA EXTERNA",
+      "useAsTurnPredictor": false,
+      "useDrivenExteriorHeadland": true,
+      "vrHeadlandOffset": {
+        "value": 0,
+        "sourceUOM": "ft",
+        "variableRepresentation": "vrHeadlandOffset"
+      }
+    },
+    "Boundary": {
+      "lastModified": "2022-10-27T09:49:21.211506100-03:00",
+      "sourceNode": "{6a6f41f7-9f44-4174-8168-0cb0ef0842d4}",
+      "erid": "{35468575-94a0-4d58-b7d3-f3f30cc73c51}",
+      "spatialGeometryType": "polygon",
+      "fileName": "Boundary35468575-94a0-4d58-b7d3-f3f30cc73c51",
+      "MBR": {
+        "uomSource": "arcdeg",
+        "uomTarget": "arcdeg",
+        "north": -24.968428417571978,
+        "south": -24.97735685897208,
+        "east": -50.41968792732844,
+        "west": -50.43683484051582
+      },
+      "dtSignalType": {
+        "value": "dtiSignalTypeRTK",
+        "definedTypeRepresentation": "dtSignalType"
+      },
+      "NameIDPair": [
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 1,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 2,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 3,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 4,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 5,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 6,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 7,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 8,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 9,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 10,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 11,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 12,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 13,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 14,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 15,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 16,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 17,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 18,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 19,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 20,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 21,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 22,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 23,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 24,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 25,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 26,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 27,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 28,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 29,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 30,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 31,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 32,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 33,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 34,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 35,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 36,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 37,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 38,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 39,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 40,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 41,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 42,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 43,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 44,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 45,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 46,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 47,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 48,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 49,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 50,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 51,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 52,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 53,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 54,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 55,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 56,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 57,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 58,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 59,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 60,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 61,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 62,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 63,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 64,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 65,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 66,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 67,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 68,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 69,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 70,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 71,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 72,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 73,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 74,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 75,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 76,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 77,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 78,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 79,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 80,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 81,
+          "passable": true
+        },
+        {
+          "Name": "LIMITE INTERNO",
+          "ID": 82,
+          "passable": true
+        }
+      ],
+      "HeadlandLookup": {
+        "ID": 0,
+        "eridRef": "{cb38ac47-df0a-a84b-f884-2a028644f548}"
+      }
+    }
+  }
+}
