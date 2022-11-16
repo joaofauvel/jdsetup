@@ -2097,7 +2097,7 @@ class Setup:
             "type": "Element",
         }
     )
-    field_value: List[Field] = field(
+    fields: List[Field] = field(
         default_factory=list,
         metadata={
             "name": "Field",
