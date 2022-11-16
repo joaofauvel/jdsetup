@@ -1,8 +1,9 @@
-from dataclasses import dataclass, field
+from dataclasses import InitVar, dataclass, field
 from decimal import Decimal
 from typing import List, Optional, Union
+from uuid import uuid4, UUID
 from xsdata.models.datatype import XmlDateTime
-from jdsetup.models.com.johndeere.schemas.basic_types import (
+from jdsetup.gs3.models.basic_types import (
     FileSchemaContentVersion,
     RepresentationSystemVersion,
     Synchronization,
@@ -11,6 +12,8 @@ from jdsetup.models.com.johndeere.schemas.basic_types import (
 
 __NAMESPACE__ = "urn:schemas-johndeere-com:RCD:Setup"
 
+def fmt_uuid4() -> str:
+    return f'{{{str(uuid4())}}}'
 
 @dataclass
 class Area:
@@ -137,22 +140,22 @@ class Client:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    last_modified: Optional[XmlDateTime] = field(
-        default=None,
+    last_modified: XmlDateTime = field(
+        default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
             "type": "Attribute",
         }
     )
-    source_node: Optional[str] = field(
-        default=None,
+    source_node: str = field(
+        default=fmt_uuid4(),
         metadata={
             "name": "sourceNode",
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
-        default=None,
+    erid: str = field(
+        default=fmt_uuid4(),
         metadata={
             "type": "Attribute",
         }
@@ -217,8 +220,10 @@ class Farm:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    last_modified: Optional[XmlDateTime] = field(
-        default=None,
+    client: InitVar[Client | None] = None
+
+    last_modified: XmlDateTime = field(
+        default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
             "type": "Attribute",
@@ -231,8 +236,8 @@ class Farm:
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
-        default=None,
+    erid: str = field(
+        default=fmt_uuid4(),
         metadata={
             "type": "Attribute",
         }
@@ -250,6 +255,10 @@ class Farm:
             "type": "Attribute",
         }
     )
+
+    def __post_init__(self, client) -> None:
+        self.client_ref = client.erid if client else None
+        self.source_node = client.source_node if client else None
 
 
 @dataclass
@@ -1267,8 +1276,10 @@ class Field:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    last_modified: Optional[XmlDateTime] = field(
-        default=None,
+    farm: InitVar[Farm | None] = None
+
+    last_modified: XmlDateTime = field(
+        default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
             "type": "Attribute",
@@ -1281,8 +1292,8 @@ class Field:
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
-        default=None,
+    erid: str = field(
+        default=fmt_uuid4(),
         metadata={
             "type": "Attribute",
         }
@@ -1300,13 +1311,17 @@ class Field:
             "type": "Attribute",
         }
     )
-    area: Optional[Area] = field(
+    area: Area = field(
         default=None,
         metadata={
             "name": "Area",
             "type": "Element",
         }
     )
+
+    def __post_init__(self, farm) -> None:
+        self.farm_ref = farm.erid if farm else None
+        self.source_node = farm.source_node if farm else None
 
 
 @dataclass
@@ -2173,8 +2188,8 @@ class SetupFile:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    language: Optional[str] = field(
-        default=None,
+    language: str = field(
+        default='en-US',
         metadata={
             "type": "Attribute",
         }

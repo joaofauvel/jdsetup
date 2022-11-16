@@ -1,4 +1,4 @@
-from jdsetup.models.basic_types import (
+from jdsetup.gs3.models.basic_types import (
     FileSchemaContentVersion,
     Node,
     NodeVersions,
@@ -6,7 +6,7 @@ from jdsetup.models.basic_types import (
     Synchronization,
     UnitOfMeasureVersion,
 )
-from jdsetup.models.spatial_types import (
+from jdsetup.gs3.models.spatial_types import (
     Mbr,
     DtSignalType,
 )

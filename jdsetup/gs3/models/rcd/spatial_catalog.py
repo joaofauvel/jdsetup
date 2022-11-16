@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 from xsdata.models.datatype import XmlDateTime
-from jdsetup.models.rcd.setup import (
+from jdsetup.gs3.models.rcd.setup import (
     FileSchemaVersion,
     Setup,
     SourceApp,
 )
-from jdsetup.models.spatial_types import (
+from jdsetup.gs3.models.spatial_types import (
     Mbr,
     DtSignalType,
 )

@@ -1,4 +1,4 @@
-from jdsetup.models.rcd.setup import (
+from jdsetup.gs3.models.rcd.setup import (
     Area,
     Chemical,
     ChemicalType,
@@ -64,7 +64,7 @@ from jdsetup.models.rcd.setup import (
     VrTurnRadius,
 )
 
-from jdsetup.models.rcd.spatial_catalog import (
+from jdsetup.gs3.models.rcd.spatial_catalog import (
     Boundary,
     CurvedTrackLine,
     HeadLand,
