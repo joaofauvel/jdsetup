@@ -17,7 +17,7 @@ class Area:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -157,7 +157,7 @@ class Client:
             "type": "Attribute",
         }
     )
-    name: Optional[str] = field(
+    name: str = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -190,7 +190,7 @@ class CropWeight:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -504,53 +504,45 @@ class SourceApp:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    major: Optional[int] = field(
-        default=None,
+    major: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    minor: Optional[int] = field(
-        default=None,
+    minor: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    build: Optional[int] = field(
-        default=None,
+    build: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    revision: Optional[int] = field(
-        default=None,
+    revision: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    name_source_app: Optional[str] = field(
-        default=None,
+    name_source_app: str = field(
         metadata={
             "name": "nameSourceApp",
             "type": "Attribute",
         }
     )
-    uuid_source_app: Optional[str] = field(
-        default=None,
+    uuid_source_app: str = field(
         metadata={
             "name": "uuidSourceApp",
             "type": "Attribute",
         }
     )
-    uuid_source_app_node: Optional[str] = field(
-        default=None,
+    uuid_source_app_node: str = field(
         metadata={
             "name": "uuidSourceAppNode",
             "type": "Attribute",
         }
     )
-    uuid_session: Optional[str] = field(
-        default=None,
+    uuid_session: str = field(
         metadata={
             "name": "uuidSession",
             "type": "Attribute",
@@ -563,7 +555,7 @@ class StandardPayableMoisture:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -753,7 +745,7 @@ class VrDistance:
         name = "vrDistance"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -781,7 +773,7 @@ class VrGpstoNonSteeringAxleOffset:
         name = "vrGPSToNonSteeringAxleOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -809,7 +801,7 @@ class VrImplementFrontOffset:
         name = "vrImplementFrontOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -837,7 +829,7 @@ class VrImplementLength:
         name = "vrImplementLength"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -865,7 +857,7 @@ class VrImplementVerticalCuttingEdgeToGroundOffset:
         name = "vrImplementVerticalCuttingEdgeToGroundOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -893,7 +885,7 @@ class VrImplementVerticalReceiverToCuttingEdgeOffset:
         name = "vrImplementVerticalReceiverToCuttingEdgeOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -921,7 +913,7 @@ class VrInlineOffset:
         name = "vrInlineOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -949,7 +941,7 @@ class VrLateralOffset:
         name = "vrLateralOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -977,7 +969,7 @@ class VrMachineReceiverVerticalOffset:
         name = "vrMachineReceiverVerticalOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1005,7 +997,7 @@ class VrNonSteeringAxleToConnectionOffset:
         name = "vrNonSteeringAxleToConnectionOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1033,7 +1025,7 @@ class VrNumberOfRows:
         name = "vrNumberOfRows"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1061,7 +1053,7 @@ class VrPhysicalImplementWidth:
         name = "vrPhysicalImplementWidth"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1089,7 +1081,7 @@ class VrReceiverOffset:
         name = "vrReceiverOffset"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1117,7 +1109,7 @@ class VrRowWidth:
         name = "vrRowWidth"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Union[float, Decimal]] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1145,7 +1137,7 @@ class VrTurnRadius:
         name = "vrTurnRadius"
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    value: Optional[Decimal] = field(
+    value: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -1328,31 +1320,27 @@ class FileSchemaVersion:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    non_production_code: Optional[int] = field(
-        default=None,
+    non_production_code: int = field(
         metadata={
             "name": "nonProductionCode",
             "type": "Attribute",
         }
     )
-    file_schema_content_version: Optional[FileSchemaContentVersion] = field(
-        default=None,
+    file_schema_content_version: FileSchemaContentVersion = field(
         metadata={
             "name": "FileSchemaContentVersion",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:BasicTypes",
         }
     )
-    unit_of_measure_version: Optional[UnitOfMeasureVersion] = field(
-        default=None,
+    unit_of_measure_version: UnitOfMeasureVersion = field(
         metadata={
             "name": "UnitOfMeasureVersion",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:BasicTypes",
         }
     )
-    representation_system_version: Optional[RepresentationSystemVersion] = field(
-        default=None,
+    representation_system_version: RepresentationSystemVersion = field(
         metadata={
             "name": "RepresentationSystemVersion",
             "type": "Element",

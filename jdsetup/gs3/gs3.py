@@ -14,9 +14,9 @@ from jdsetup.gs3.models.rcd.spatial_catalog import (Boundary, CurvedTrackLine,
                                                     SpatialCatalog)
 
 config_default_paths = {
-    'source_app': './jdsetup/gs3/config/source_app.json',
+    'source_app': './jdsetup/gs3/config/setup_source_app.json',
     'setup': './jdsetup/gs3/config/setup.json',
-    'file_schema_version': './jdsetup/gs3/config/file_schema_version.json',
+    'file_schema_version': './jdsetup/gs3/config/setup_file_schema_version.json',
     'synchronization': './jdsetup/gs3/config/synchronization.json',
 }
 
@@ -56,13 +56,13 @@ class GS3:
     def __init__(self, 
             participant: ParticipantDefinition, 
             profile: str = 'JDSETUP', 
-            root: str = '.',
+            path: str = '.',
             parser: Parser = JsonParser(),
             ) -> None:
         self.profile = profile
         self.participant = participant
         self.parser = parser
-        self.gs3paths = self._resolve_gs3paths(root)
+        self.gs3paths = self._resolve_gs3paths(path)
 
     def _resolve_gs3paths(self, root: str = '.') -> GS3Paths:
         p = Path(f'{root}/GS3_2630/{self.profile}/RCD/EIC/')
@@ -75,13 +75,16 @@ class GS3:
     def _create_folder_scaffold(self, root: str = '.') -> None:
         self.gs3paths.create_structure()
 
-    def _scaffold_setup(self, 
+    def _setup(self, 
                     setup: str, 
                     file_schema_version: str, 
                     synchronization: str) -> Setup:
         setup_: Setup = self.parser.parse(setup, Setup)
         setup_.file_schema_version = self.parser.parse(file_schema_version, FileSchemaVersion)
         setup_.synchronization = self.parser.parse(synchronization, Synchronization)
+        setup_.participant = Participant(client=self.participant.client)
+        setup_.farm = self.participant.farm
+        setup_.fields = self.participant.fields
         return setup_
 
     def _scaffold_setupfile(self, 
@@ -89,16 +92,12 @@ class GS3:
                         setup: str, 
                         file_schema_version: str, 
                         synchronization: str) -> SetupFile:
-        setup_ = self._scaffold_setup(setup, file_schema_version, synchronization)
+        setup_ = self._setup(setup, file_schema_version, synchronization)
         source_app_ = self.parser.parse(source_app, SourceApp)
         return SetupFile(source_app=source_app_, setup=setup_)
 
     def setupfile(self, config_paths: dict[str, str] = config_default_paths) -> SetupFile:
-        sf = self._scaffold_setupfile(**config_paths)
-        sf.setup.participant = Participant(client=self.participant.client)
-        sf.setup.farm = self.participant.farm
-        sf.setup.fields = self.participant.fields
-        return sf
+        return self._scaffold_setupfile(**config_paths)
 
     def spatialcatalog(self, config_paths: dict[str, str] = config_default_paths) -> SpatialCatalog:
         pass

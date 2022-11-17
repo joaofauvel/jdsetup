@@ -11,21 +11,21 @@ class Mbr:
         name = "MBR"
         namespace = "urn:schemas-johndeere-com:SpatialTypes"
 
-    uom_source: Optional[str] = field(
-        default=None,
+    uom_source: str = field(
+        default='arcdeg',
         metadata={
             "name": "uomSource",
             "type": "Attribute",
         }
     )
-    uom_target: Optional[str] = field(
-        default=None,
+    uom_target: str = field(
+        default='arcdeg',
         metadata={
             "name": "uomTarget",
             "type": "Attribute",
         }
     )
-    north: Optional[Union[float, Decimal]] = field(
+    north: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -37,13 +37,13 @@ class Mbr:
             "type": "Attribute",
         }
     )
-    east: Optional[Union[float, Decimal]] = field(
+    east: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
         }
     )
-    west: Optional[Union[Decimal, float]] = field(
+    west: Optional[float] = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -57,14 +57,14 @@ class DtSignalType:
         name = "dtSignalType"
         namespace = "urn:schemas-johndeere-com:SpatialTypes"
 
-    value: Optional[str] = field(
-        default=None,
+    value: str = field(
+        default='dtiSignalTypeUnknown',
         metadata={
             "type": "Attribute",
         }
     )
-    defined_type_representation: Optional[str] = field(
-        default=None,
+    defined_type_representation: str = field(
+        default='dtSignalType',
         metadata={
             "name": "definedTypeRepresentation",
             "type": "Attribute",

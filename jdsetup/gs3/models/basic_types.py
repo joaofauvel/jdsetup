@@ -10,14 +10,12 @@ class FileSchemaContentVersion:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    major: Optional[int] = field(
-        default=None,
+    major: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    minor: Optional[int] = field(
-        default=None,
+    minor: int = field(
         metadata={
             "type": "Attribute",
         }
@@ -29,14 +27,12 @@ class Node:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    uuid: Optional[str] = field(
-        default=None,
+    uuid: str = field(
         metadata={
             "type": "Attribute",
         }
     )
-    last_seen: Optional[XmlDateTime] = field(
-        default=None,
+    last_seen: XmlDateTime = field(
         metadata={
             "name": "lastSeen",
             "type": "Attribute",
@@ -49,14 +45,12 @@ class RepresentationSystemVersion:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    major: Optional[int] = field(
-        default=None,
+    major: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    minor: Optional[int] = field(
-        default=None,
+    minor: int = field(
         metadata={
             "type": "Attribute",
         }
@@ -68,14 +62,12 @@ class UnitOfMeasureVersion:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    major: Optional[int] = field(
-        default=None,
+    major: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    minor: Optional[int] = field(
-        default=None,
+    minor: int = field(
         metadata={
             "type": "Attribute",
         }
@@ -87,8 +79,7 @@ class NodeVersions:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    node: Optional[Node] = field(
-        default=None,
+    node: Node = field(
         metadata={
             "name": "Node",
             "type": "Element",
@@ -101,8 +92,7 @@ class Synchronization:
     class Meta:
         namespace = "urn:schemas-johndeere-com:BasicTypes"
 
-    node_versions: Optional[NodeVersions] = field(
-        default=None,
+    node_versions: NodeVersions = field(
         metadata={
             "name": "NodeVersions",
             "type": "Element",

@@ -1,5 +1,6 @@
 from dataclasses import InitVar, dataclass, field
-from typing import List, Optional
+from functools import partial
+from typing import Callable, List, Optional
 from xsdata.models.datatype import XmlDateTime
 from jdsetup.gs3.models.basic_types import FileSchemaContentVersion, RepresentationSystemVersion, Synchronization, UnitOfMeasureVersion
 from jdsetup.gs3.models.rcd.setup import (
@@ -21,21 +22,21 @@ class VrEastShiftComponent:
         name = "vrEastShiftComponent"
         namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Base"
 
-    value: Optional[int] = field(
-        default=None,
+    value: int = field(
+        default=0,
         metadata={
             "type": "Attribute",
         }
     )
-    source_uom: Optional[str] = field(
-        default=None,
+    source_uom: str = field(
+        default='m',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
         }
     )
-    variable_representation: Optional[str] = field(
-        default=None,
+    variable_representation: str = field(
+        default='vrEastShiftComponent',
         metadata={
             "name": "variableRepresentation",
             "type": "Attribute",
@@ -49,21 +50,21 @@ class VrNorthShiftComponent:
         name = "vrNorthShiftComponent"
         namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:Base"
 
-    value: Optional[int] = field(
-        default=None,
+    value: int = field(
+        default=0,
         metadata={
             "type": "Attribute",
         }
     )
-    source_uom: Optional[str] = field(
-        default=None,
+    source_uom: str = field(
+        default='m',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
         }
     )
-    variable_representation: Optional[str] = field(
-        default=None,
+    variable_representation: str = field(
+        default='vrNorthShiftComponent',
         metadata={
             "name": "variableRepresentation",
             "type": "Attribute",
@@ -83,15 +84,15 @@ class VrReferenceLatitude:
             "type": "Attribute",
         }
     )
-    source_uom: Optional[str] = field(
-        default='None',
+    source_uom: str = field(
+        default='arcdeg',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
         }
     )
-    variable_representation: Optional[str] = field(
-        default=None,
+    variable_representation: str = field(
+        default='vrLatitude',
         metadata={
             "name": "variableRepresentation",
             "type": "Attribute",
@@ -111,15 +112,15 @@ class VrReferenceLongitude:
             "type": "Attribute",
         }
     )
-    source_uom: Optional[str] = field(
-        default=None,
+    source_uom: str = field(
+        default='arcdeg',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
         }
     )
-    variable_representation: Optional[str] = field(
-        default=None,
+    variable_representation: str = field(
+        default='vrLongitude',
         metadata={
             "name": "variableRepresentation",
             "type": "Attribute",
@@ -133,21 +134,21 @@ class VrHeadlandOffset:
         name = "vrHeadlandOffset"
         namespace = ""
 
-    value: Optional[int] = field(
-        default=None,
+    value: int = field(
+        default=0,
         metadata={
             "type": "Attribute",
         }
     )
-    source_uom: Optional[str] = field(
-        default=None,
+    source_uom: str = field(
+        default='ft',
         metadata={
             "name": "sourceUOM",
             "type": "Attribute",
         }
     )
-    variable_representation: Optional[str] = field(
-        default=None,
+    variable_representation: str = field(
+        default='vrHeadlandOffset',
         metadata={
             "name": "variableRepresentation",
             "type": "Attribute",
@@ -162,7 +163,7 @@ class HeadLand:
 
     field_: InitVar[Field | None] = None
 
-    last_modified: Optional[XmlDateTime] = field(
+    last_modified: XmlDateTime = field(
         default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
@@ -176,7 +177,7 @@ class HeadLand:
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
+    erid: str = field(
         default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
@@ -188,22 +189,22 @@ class HeadLand:
             "type": "Attribute",
         }
     )
-    use_as_turn_predictor: Optional[bool] = field(
-        default=None,
+    use_as_turn_predictor: bool = field(
+        default=False,
         metadata={
             "name": "useAsTurnPredictor",
             "type": "Attribute",
         }
     )
-    use_driven_exterior_headland: Optional[bool] = field(
-        default=None,
+    use_driven_exterior_headland: bool = field(
+        default=True,
         metadata={
             "name": "useDrivenExteriorHeadland",
             "type": "Attribute",
         }
     )
-    vr_headland_offset: Optional[VrHeadlandOffset] = field(
-        default=None,
+    vr_headland_offset: VrHeadlandOffset = field(
+        default_factory=VrHeadlandOffset,
         metadata={
             "name": "vrHeadlandOffset",
             "type": "Element",
@@ -275,6 +276,7 @@ class Boundary:
         namespace = ""
 
     field_: InitVar[Field | None] = None
+    dt_signal_type_factory: InitVar[Callable[[], DtSignalType]] = partial(DtSignalType, value='dtiSignalTypeRTK')
 
     last_modified: Optional[XmlDateTime] = field(
         default=XmlDateTime.now(),
@@ -290,14 +292,14 @@ class Boundary:
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
+    erid: str = field(
         default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
     )
-    spatial_geometry_type: Optional[str] = field(
-        default=None,
+    spatial_geometry_type: str = field(
+        default='polygon',
         metadata={
             "name": "spatialGeometryType",
             "type": "Attribute",
@@ -310,16 +312,16 @@ class Boundary:
             "type": "Attribute",
         }
     )
-    mbr: Optional[Mbr] = field(
-        default=None,
+    mbr: Mbr = field(
+        default_factory=Mbr,
         metadata={
             "name": "MBR",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:SpatialTypes",
         }
     )
-    dt_signal_type: Optional[DtSignalType] = field(
-        default=None,
+    dt_signal_type: DtSignalType = field(
+        default_factory=dt_signal_type_factory,
         metadata={
             "name": "dtSignalType",
             "type": "Element",
@@ -344,6 +346,8 @@ class Boundary:
     def __post_init__(self, field_) -> None:
         if field_:
             self.source_node = field_.source_node
+        if not self.file_name and self.erid:
+            self.file_name = f'Boundary{self.erid.strip("}{")}'
 
 
 @dataclass
@@ -352,8 +356,10 @@ class CurvedTrackLine:
         namespace = ""
 
     field_: InitVar[Field | None] = None
+    reference_longitude: InitVar[float | None] = None
+    reference_latitude: InitVar[float | None] = None
 
-    last_modified: Optional[XmlDateTime] = field(
+    last_modified: XmlDateTime = field(
         default=XmlDateTime.now(),
         metadata={
             "name": "lastModified",
@@ -367,14 +373,14 @@ class CurvedTrackLine:
             "type": "Attribute",
         }
     )
-    erid: Optional[str] = field(
+    erid: str = field(
         default_factory=fmt_uuid4,
         metadata={
             "type": "Attribute",
         }
     )
-    spatial_geometry_type: Optional[str] = field(
-        default=None,
+    spatial_geometry_type: str = field(
+        default='line',
         metadata={
             "name": "spatialGeometryType",
             "type": "Attribute",
@@ -393,32 +399,32 @@ class CurvedTrackLine:
             "type": "Attribute",
         }
     )
-    mbr: Optional[Mbr] = field(
-        default=None,
+    mbr: Mbr = field(
+        default_factory=Mbr,
         metadata={
             "name": "MBR",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:SpatialTypes",
         }
     )
-    dt_signal_type: Optional[DtSignalType] = field(
-        default=None,
+    dt_signal_type: DtSignalType = field(
+        default_factory=DtSignalType,
         metadata={
             "name": "dtSignalType",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:SpatialTypes",
         }
     )
-    vr_east_shift_component: Optional[VrEastShiftComponent] = field(
-        default=None,
+    vr_east_shift_component: VrEastShiftComponent = field(
+        default_factory=VrEastShiftComponent,
         metadata={
             "name": "vrEastShiftComponent",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:RCD:SpatialCatalog:Base",
         }
     )
-    vr_north_shift_component: Optional[VrNorthShiftComponent] = field(
-        default=None,
+    vr_north_shift_component: VrNorthShiftComponent = field(
+        default_factory=VrNorthShiftComponent,
         metadata={
             "name": "vrNorthShiftComponent",
             "type": "Element",
@@ -442,9 +448,15 @@ class CurvedTrackLine:
         }
     )
 
-    def __post_init__(self, field_) -> None:
+    def __post_init__(self, field_, reference_longitude, reference_latitude) -> None:
         if field_:
             self.source_node = field_.source_node
+        if reference_longitude:
+            self.vr_reference_longitude = VrReferenceLongitude(value=reference_longitude) 
+        if reference_latitude:
+            self.vr_reference_latitude = VrReferenceLatitude(value=reference_latitude)
+        if not self.file_name and self.erid:
+            self.file_name = f'CurveTrack{self.erid.strip("}{")}'
 
 
 @dataclass
@@ -493,31 +505,27 @@ class SCFileSchemaVersion:
     class Meta:
         namespace = ""
 
-    non_production_code: Optional[int] = field(
-        default=None,
+    non_production_code: int = field(
         metadata={
             "name": "nonProductionCode",
             "type": "Attribute",
         }
     )
-    file_schema_content_version: Optional[FileSchemaContentVersion] = field(
-        default=None,
+    file_schema_content_version: FileSchemaContentVersion = field(
         metadata={
             "name": "FileSchemaContentVersion",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:BasicTypes",
         }
     )
-    unit_of_measure_version: Optional[UnitOfMeasureVersion] = field(
-        default=None,
+    unit_of_measure_version: UnitOfMeasureVersion = field(
         metadata={
             "name": "UnitOfMeasureVersion",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:BasicTypes",
         }
     )
-    representation_system_version: Optional[RepresentationSystemVersion] = field(
-        default=None,
+    representation_system_version: RepresentationSystemVersion = field(
         metadata={
             "name": "RepresentationSystemVersion",
             "type": "Element",
@@ -531,53 +539,45 @@ class SCSourceApp:
     class Meta:
         namespace = ""
 
-    major: Optional[int] = field(
-        default=None,
+    major: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    minor: Optional[int] = field(
-        default=None,
+    minor: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    build: Optional[int] = field(
-        default=None,
+    build: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    revision: Optional[int] = field(
-        default=None,
+    revision: int = field(
         metadata={
             "type": "Attribute",
         }
     )
-    name_source_app: Optional[str] = field(
-        default=None,
+    name_source_app: str = field(
         metadata={
             "name": "nameSourceApp",
             "type": "Attribute",
         }
     )
-    uuid_source_app: Optional[str] = field(
-        default=None,
+    uuid_source_app: str = field(
         metadata={
             "name": "uuidSourceApp",
             "type": "Attribute",
         }
     )
-    uuid_source_app_node: Optional[str] = field(
-        default=None,
+    uuid_source_app_node: str = field(
         metadata={
             "name": "uuidSourceAppNode",
             "type": "Attribute",
         }
     )
-    uuid_session: Optional[str] = field(
-        default=None,
+    uuid_session: str = field(
         metadata={
             "name": "uuidSession",
             "type": "Attribute",
@@ -590,44 +590,39 @@ class SCSetup:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:Setup"
 
-    file_schema_version: Optional[FileSchemaVersion] = field(
-        default=None,
+    file_schema_version: FileSchemaVersion = field(
         metadata={
             "name": "FileSchemaVersion",
             "type": "Element",
         }
     )
-    synchronization: Optional[Synchronization] = field(
-        default=None,
+    synchronization: Synchronization = field(
         metadata={
             "name": "Synchronization",
             "type": "Element",
             "namespace": "urn:schemas-johndeere-com:BasicTypes",
         }
     )
-    participant: Optional[Participant] = field(
-        default=None,
+    participant: Participant = field(
         metadata={
             "name": "Participant",
             "type": "Element",
         }
     )
-    farm: Optional[Farm] = field(
-        default=None,
+    farm: Farm = field(
         metadata={
             "name": "Farm",
             "type": "Element",
         }
     )
-    fields: List[Field] = field(
-        default_factory=list,
+    field_: Field = field(
         metadata={
             "name": "Field",
             "type": "Element",
         }
     )
-    products: Optional[Products] = field(
-        default=None,
+    products: Products = field(
+        default_factory=Products,
         metadata={
             "name": "Products",
             "type": "Element",
@@ -640,32 +635,28 @@ class SpatialCatalog:
     class Meta:
         namespace = "urn:schemas-johndeere-com:RCD:SpatialCatalog:FieldImportExport"
 
-    file_schema_version: Optional[SCFileSchemaVersion] = field(
-        default=None,
+    file_schema_version: SCFileSchemaVersion = field(
         metadata={
             "name": "FileSchemaVersion",
             "type": "Element",
             "namespace": "",
         }
     )
-    source_app: Optional[SCSourceApp] = field(
-        default=None,
+    source_app: SCSourceApp = field(
         metadata={
             "name": "SourceApp",
             "type": "Element",
             "namespace": "",
         }
     )
-    setup: Optional[SCSetup] = field(
-        default=None,
+    setup: SCSetup = field(
         metadata={
             "name": "Setup",
             "type": "Element",
             "namespace": "",
         }
     )
-    spatial_items: Optional[SpatialItems] = field(
-        default=None,
+    spatial_items: SpatialItems = field(
         metadata={
             "name": "SpatialItems",
             "type": "Element",
